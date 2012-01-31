@@ -1,11 +1,13 @@
 <?php
 class database
 {
-	public function connect()
+public function connect()
 	{
-		return new PDO("mysql:host=".config::db_host.";dbname=".config::db_name, config::db_user, config::db_pass);
+		if (config::dev)
+			return new PDO("mysql:host=".config::local_host.";dbname=".config::local_name, config::local_user, config::local_pass);
+		else
+			return new PDO("mysql:host=".config::db_host.";dbname=".config::db_name, config::db_user, config::db_pass);
 	}
-	
 	public function testFunction($id)
 	{
 		$db = $this->connect();
